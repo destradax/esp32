@@ -4,35 +4,16 @@
 #include <Arduino.h>
 #include <ESP8266WebServer.h>
 
-#include "builtinfiles.h"
+#include "indexHtml.h"
 
 ESP8266WebServer server(80);
 
-void serverSetup(const char *ssid, const char *passPhrase) {
-  Serial.println("Starting WebServer...");
-
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, passPhrase);
-  WiFi.setHostname("webserveros");
-
-  Serial.print("Connect to WiFi: ");
-  Serial.println(ssid);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("Connected");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-
-  Serial.println("Registering service handlers...");
+void serverSetup() {
+  Serial.print("Registering endpoints... ");
 
   server.on("/", HTTP_GET, []() {
     Serial.println("Serving index file");
-    server.send(200, "text/html; charset=utf-8", indexFile);
+    server.send(200, "text/html; charset=utf-8", indexHtml);
   });
 
   server.on("/turnOn", HTTP_GET, []() {
@@ -47,13 +28,13 @@ void serverSetup(const char *ssid, const char *passPhrase) {
 
   Serial.println("Done");
 
+  Serial.print("Starting WebServer... ");
+
   server.enableCORS(true);
-
   server.enableETag(true);
-
   server.begin();
-  Serial.print("Hostname:");
-  Serial.println(WiFi.getHostname());
+
+  Serial.println("Done");
 }
 
-void serverStart() { server.handleClient(); }
+void serverListen() { server.handleClient(); }

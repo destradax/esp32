@@ -1,7 +1,7 @@
 #ifndef WEBSERVER
 #define WEBSERVER
 
-void serverSetup(const char *ssid, const char *passPhrase);
-void serverStart();
+void serverSetup();
+void serverListen();
 
-#endif  // WEBSERVER
+#endif
