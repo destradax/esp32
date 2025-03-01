@@ -17,12 +17,36 @@ void serverSetup() {
   });
 
   server.on("/turnOn", HTTP_GET, []() {
-    digitalWrite(LED_BUILTIN, LOW);
+    String pinArg = server.arg("pin");
+
+    if (pinArg == NULL) {
+      Serial.println("Turning on built-in LED");
+      digitalWrite(LED_BUILTIN, LOW);
+    } else {
+      uint8_t pin = (uint8_t)pinArg.toInt();
+      Serial.print("Turning on pin #");
+      Serial.println(pin);
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, HIGH);
+    }
+
     server.send(200, "text/plain; charset=utf-8", "OK");
   });
 
   server.on("/turnOff", HTTP_GET, []() {
-    digitalWrite(LED_BUILTIN, HIGH);
+    String pinArg = server.arg("pin");
+
+    if (pinArg == NULL) {
+      Serial.println("Turning off built-in LED");
+      digitalWrite(LED_BUILTIN, HIGH);
+    } else {
+      uint8_t pin = (uint8_t)pinArg.toInt();
+      Serial.print("Turning off pin #");
+      Serial.println(pin);
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, LOW);
+    }
+
     server.send(200, "text/plain; charset=utf-8", "OK");
   });
 
