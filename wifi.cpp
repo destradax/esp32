@@ -8,7 +8,8 @@
 
 bool connectToWifi(const char *ssid, const char *passPhrase) {
   Serial.print("Connecting to WiFi: ");
-  Serial.println(ssid);
+  Serial.print(ssid);
+  Serial.print(" ... ");
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, passPhrase);

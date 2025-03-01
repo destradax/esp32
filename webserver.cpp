@@ -12,7 +12,7 @@ void serverSetup() {
   Serial.print("Registering endpoints... ");
 
   server.on("/", HTTP_GET, []() {
-    Serial.println("Serving index file");
+    // keep for indentation
     server.send(200, "text/html; charset=utf-8", indexHtml);
   });
 

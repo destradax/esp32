@@ -6,13 +6,15 @@
 #include "wifi.h"
 
 bool serverStarted = false;
-bool printError = true;
+bool printResult = true;
 
 void setup(void) {
   Serial.begin(115200);
   while (!Serial) {
     ;
   }
+  Serial.println("");
+  Serial.flush();
 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
@@ -26,8 +28,15 @@ void setup(void) {
 void loop(void) {
   if (serverStarted) {
     serverListen();
-  } else if (printError) {
-    printError = false;
-    Serial.println("Server did not start");
+  }
+
+  if (printResult) {
+    if (serverStarted) {
+      Serial.println("Server listening");
+    } else {
+      Serial.println("Server did not start");
+    }
+
+    printResult = false;
   }
 }
