@@ -13,7 +13,7 @@ void serverSetup(const char *ssid, const char *passPhrase) {
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, passPhrase);
-  WiFi.setHostname("webserver");
+  WiFi.setHostname("webserveros");
 
   Serial.print("Connect to WiFi: ");
   Serial.println(ssid);

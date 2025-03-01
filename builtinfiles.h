@@ -1,11 +1,3 @@
-/**
- * @file builtinfiles.h
- * @brief This file is part of the WebServer example for the ESP8266WebServer.
- *  
- * This file contains long, multiline text variables for  all builtin resources.
- */
-
-// used for $upload.htm
 static const char indexFile[] PROGMEM =
 R"==(
 <!DOCTYPE html>

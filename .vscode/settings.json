@@ -1,5 +1,5 @@
 {
   "files.associations": {
-    "builtinfiles.h": "c"
+    "builtinfiles.h": "cpp"
   }
 }
