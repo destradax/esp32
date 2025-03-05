@@ -1,33 +1,12 @@
 #include <Arduino.h>
-#include <ESP8266WebServer.h>
-#include <WebSocketsClient.h>
 
 #include "credentials.h"
 #include "webserver.h"
+#include "websocket.h"
 #include "wifi.h"
 
 bool serverStarted = false;
 bool printResult = true;
-
-const char* webSocketHost = "localhost";
-const int webSocketPort = 3001;
-const char* webSocketPath = "/";
-
-WebSocketsClient webSocket;
-
-void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
-  switch (type) {
-    case WStype_CONNECTED:
-      Serial.println("Connected to WebSocket server!");
-      break;
-    case WStype_DISCONNECTED:
-      Serial.println("Disconnected from WebSocker server");
-      break;
-    case WStype_TEXT:
-      Serial.printf("Received message: %s\n", payload);
-      break;
-  }
-}
 
 void setup(void) {
   Serial.begin(115200);
@@ -42,9 +21,8 @@ void setup(void) {
 
   if (connectToWifi(ssid, passPhrase)) {
     serverSetup();
+    webSocketSetup();
 
-    webSocket.begin(webSocketHost, webSocketPort, webSocketPath);
-    webSocket.onEvent(webSocketEvent);
     serverStarted = true;
   }
 }
@@ -52,7 +30,7 @@ void setup(void) {
 void loop(void) {
   if (serverStarted) {
     serverListen();
-    webSocket.loop();
+    webSocketListen();
   }
 
   if (printResult) {
